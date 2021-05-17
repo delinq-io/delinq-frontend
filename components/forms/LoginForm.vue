@@ -39,6 +39,17 @@
     </div>
 
     <!--------------------------->
+    <!-- remember me -->
+    <div class="my-5">
+      <div class="flex items-center">
+        <input id="remember_me" v-model="loginForm.remember_me" type="checkbox" class="form-checkbox h-4 w-4 transition duration-150 ease-in-out">
+        <label for="remember_me" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+          Remember me
+        </label>
+      </div>
+    </div>
+
+    <!--------------------------->
     <!-- submit button -->
     <button
       :disabled="isLoading"
