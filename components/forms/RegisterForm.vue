@@ -151,7 +151,8 @@ export default {
       this.isLoading = true
       this.$axios.post('/auth/register', this.registerForm)
         .then(() => {
-          this.$toast.global.success({ message: 'A confirmation email has been sent to your address.' })
+          localStorage.setItem('activate.email', this.registerForm.email)
+          this.$router.push('/activate')
         })
         .catch((err) => {
           this.$toast.global.error({ message: err.response.data.errors[0].message })
