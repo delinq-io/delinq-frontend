@@ -105,7 +105,9 @@ export default {
       this.$axios.post('/auth/activate', { ...this.activateForm, email: this.email })
         .then(() => {
           localStorage.removeItem('activate.email')
-          this.$router.push('/login?showSteps=true')
+          setTimeout(() => {
+            this.$router.push('/login?showSteps=true')
+          }, 100)
         })
         .catch((err) => {
           this.$toast.global.error({ message: err.response.data.errors[0].message })
