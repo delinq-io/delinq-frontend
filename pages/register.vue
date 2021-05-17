@@ -147,44 +147,9 @@
         <div class="pt-6 px-4 sm:px-6 lg:px-8">
           <nav class="flex justify-center">
             <ol class="space-y-6">
-              <!-- Current Step -->
-              <li class="flex items-start">
-                <span class="flex-shrink-0 h-5 w-5 relative flex items-center justify-center">
-                  <span class="absolute h-4 w-4 rounded-full bg-indigo-200 dark:bg-indigo-100" />
-                  <span class="relative block w-2 h-2 bg-indigo-600 dark:bg-indigo-500 rounded-full" />
-                </span>
-                <span class="ml-3 text-sm font-medium text-indigo-600 dark:text-indigo-500">Register</span>
-              </li>
-
-              <!-- Upcoming Step -->
-              <li class="flex items-start">
-                <div class="flex-shrink-0 h-5 w-5 relative flex items-center justify-center">
-                  <div class="h-2 w-2 bg-gray-300 dark:bg-gray-700 rounded-full" />
-                </div>
-                <p class="ml-3 text-sm font-medium text-gray-500 dark:text-gray-300">
-                  Activate account
-                </p>
-              </li>
-
-              <!-- Upcoming Step -->
-              <li class="flex items-start">
-                <div class="flex-shrink-0 h-5 w-5 relative flex items-center justify-center">
-                  <div class="h-2 w-2 bg-gray-300 dark:bg-gray-700 rounded-full" />
-                </div>
-                <p class="ml-3 text-sm font-medium text-gray-500 dark:text-gray-300">
-                  Setup workspace
-                </p>
-              </li>
-
-              <!-- Upcoming Step -->
-              <li class="flex items-start">
-                <div class="flex-shrink-0 h-5 w-5 relative flex items-center justify-center">
-                  <div class="h-2 w-2 bg-gray-300 dark:bg-gray-700 rounded-full" />
-                </div>
-                <p class="ml-3 text-sm font-medium text-gray-500 dark:text-gray-300">
-                  Shorten links!
-                </p>
-              </li>
+              <form-step-current label="Register" />
+              <form-step-upcoming label="Activate account" />
+              <form-step-upcoming label="Shorten links!" />
             </ol>
           </nav>
         </div>
