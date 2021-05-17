@@ -3,7 +3,7 @@
     class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 shadow-md rounded px-8 py-6 mt-8"
     @submit.prevent="submitLoginForm()"
   >
-    <h1 class="text-center text-xl font-black dark:text-gray-100">
+    <h1 class="text-xl font-black dark:text-gray-100">
       Enter your email and password
     </h1>
 
@@ -74,8 +74,13 @@ export default {
     submitLoginForm () {
       this.isLoading = true
       this.$auth.loginWith('local', { data: this.loginForm })
-        .then(() => {
+        .then((res) => {
           this.$toast.global.success({ message: 'Successfully authenticated!' })
+          setTimeout(() => {
+            (res.data.firstLogin)
+              ? this.$router.push('/workspaces/new?showSteps=true')
+              : this.$router.push('/workspaces')
+          }, 50)
         })
         .catch((err) => {
           this.$toast.global.error({ message: err.response.data.errors[0].message })
