@@ -31,7 +31,7 @@
             </li>
 
             <li class="w-full sm:w-auto">
-              <div class="relative font-bold rounded">
+              <div v-click-outside="clickOutside" class="relative font-bold rounded">
                 <div class="flex items-center p-1 m-1 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-900 dark:text-gray-100 select-none" @click="toggleUserMenu()">
                   <span class="pl-2 mr-2 truncate">{{ $auth.user.username }}</span>
                   <font-awesome-icon icon="caret-down" class="text-gray-600 font-light" />
@@ -79,6 +79,9 @@ export default {
         .catch(() => {
           this.$toast.global.error({ message: 'An error has occured...' })
         })
+    },
+    clickOutside () {
+      this.showMenu = false
     }
   }
 }
