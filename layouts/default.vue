@@ -1,6 +1,12 @@
 <template>
   <div :class="getColorScheme()">
-    <Nuxt />
+    <div class="flex flex-col items-center bg-gray-50 dark:bg-gray-850">
+      <Navbar />
+
+      <Nuxt />
+
+      <Footer />
+    </div>
   </div>
 </template>
 

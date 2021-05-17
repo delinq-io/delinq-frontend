@@ -90,8 +90,8 @@ export default {
   // Fontawesome icons configuration
   fontawesome: {
     icons: {
-      solid: ['faCircleNotch'],
-      brands: []
+      solid: ['faCaretDown', 'faCog', 'faSignOutAlt'],
+      brands: ['faGithub']
     }
   },
 
