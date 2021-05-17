@@ -20,6 +20,7 @@
             <ol class="space-y-6">
               <form-step-current label="Register" />
               <form-step-upcoming label="Activate account" />
+              <form-step-upcoming label="Setup a workspace" />
               <form-step-upcoming label="Shorten links!" />
             </ol>
           </nav>
