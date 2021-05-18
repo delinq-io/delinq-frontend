@@ -1,10 +1,10 @@
 <template>
   <div :class="getColorScheme()">
     <div class="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-900">
-      <div class="w-full my-8 text-center">
+      <div class="w-full my-8 text-center cursor-pointer" @click="$router.push('/login')">
         <div class="flex justify-center items-center space-x-4">
           <img alt="delinq.io logo" class="rounded" src="@/assets/images/logo.svg" style="height: 3rem;">
-          <p class="dark:text-white font-bold text-2xl">
+          <p class="dark:text-white font-bold text-2xl select-none">
             delinq.io
           </p>
         </div>
