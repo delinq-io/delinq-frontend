@@ -12,7 +12,7 @@
 
       <ul class="my-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <div
-          v-for="(workspace, index) in workspaces"
+          v-for="(workspace, index) in workspacesList"
           :key="index"
           class="relative group"
         >
@@ -46,17 +46,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   middleware: 'auth',
-  data () {
-    return {
-      workspaces: []
-    }
+  fetch () {
+    this.$store.dispatch('workspaces/fetchList')
   },
-  async fetch () {
-    await this.$axios.get('/me/workspaces')
-      .then((res) => { this.workspaces = res.data })
-      .catch((err) => { this.$toast.global.error({ message: err.response.data.errors[0].message }) })
+  computed: {
+    ...mapState('workspaces', [
+      'workspacesList'
+    ])
   }
 }
 </script>
