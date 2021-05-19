@@ -15,7 +15,10 @@
           </div>
 
           <div class="flex justify-end ml-auto pl-2">
-            <button class="text-sm bg-indigo-600 text-white py-2 px-4 rounded-md">
+            <button
+              class="text-sm bg-indigo-600 text-white py-2 px-4 rounded-md"
+              @click="$store.commit('layout/TOGGLE_CREATE_LINK_SLIDEOVER', true)"
+            >
               + New link
             </button>
           </div>
