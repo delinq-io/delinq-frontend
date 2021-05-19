@@ -96,7 +96,7 @@ export default {
   // Fontawesome icons configuration
   fontawesome: {
     icons: {
-      solid: ['faCaretDown', 'faCog', 'faSignOutAlt'],
+      solid: ['faCaretDown', 'faAngleDown', 'faPlus', 'faCog', 'faSignOutAlt'],
       brands: ['faGithub']
     }
   },
