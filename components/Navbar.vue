@@ -37,19 +37,21 @@
                   <font-awesome-icon icon="caret-down" class="text-gray-600 font-light" />
                 </div>
 
-                <div v-show="showMenu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 focus:outline-none">
-                  <div class="py-1">
-                    <nuxt-link class="text-gray-700 dark:text-gray-300 hover:cursor-pointer block px-4 py-2 text-sm font-normal" to="/settings">
-                      <font-awesome-icon icon="cog" class="mr-1" />
-                      Settings
-                    </nuxt-link>
+                <transition name="fade" :duration="100">
+                  <div v-show="showMenu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 focus:outline-none">
+                    <div class="py-1">
+                      <nuxt-link class="text-gray-700 dark:text-gray-300 hover:cursor-pointer block px-4 py-2 text-sm font-normal" to="/settings">
+                        <font-awesome-icon icon="cog" class="mr-1" />
+                        Settings
+                      </nuxt-link>
 
-                    <button class="text-gray-700 dark:text-gray-300 hover:cursor-pointer block w-full text-left px-4 py-2 text-sm" @click="logout()">
-                      <font-awesome-icon icon="sign-out-alt" class="mr-1" />
-                      Sign out
-                    </button>
+                      <button class="text-gray-700 dark:text-gray-300 hover:cursor-pointer block w-full text-left px-4 py-2 text-sm" @click="logout()">
+                        <font-awesome-icon icon="sign-out-alt" class="mr-1" />
+                        Sign out
+                      </button>
+                    </div>
                   </div>
-                </div>
+                </transition>
               </div>
             </li>
           </ul>
