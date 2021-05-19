@@ -12,7 +12,43 @@
             </p>
           </div>
 
-          <div class="flex justify-end ml-auto pl-2">
+          <div class="flex space-x-4 items-center justify-end ml-auto pl-2">
+            <div v-click-outside="clickOutsideDateMenu" class="relative" style="width: 190px;">
+              <div
+                class="flex items-center justify-between rounded bg-white dark:bg-gray-800 shadow px-4 pr-3 py-2 leading-tight cursor-pointer text-sm font-medium text-gray-800 dark:text-gray-200 h-full"
+                @click="showDateMenu = !showDateMenu"
+              >
+                <span class="mr-2">Today</span>
+                <font-awesome-icon icon="caret-down" class="text-indigo-500 h-4 w-4" />
+              </div>
+
+              <transition name="fade" :duration="80">
+                <div v-show="showDateMenu" class="absolute mt-2 rounded shadow-md z-10 enter-done" style="width: 190px;">
+                  <div class="rounded bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 font-medium text-gray-800 dark:text-gray-200">
+                    <div class="py-1">
+                      <p class="font-bold px-4 py-2 md:text-sm leading-tight hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-gray-100 flex items-center justify-between">
+                        Today
+                        <span class="font-normal">D</span>
+                      </p>
+                      <p class=" px-4 py-2 md:text-sm leading-tight hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-gray-100 flex items-center justify-between">
+                        Realtime
+                        <span class="font-normal">R</span>
+                      </p>
+                    </div>
+
+                    <div class="border-t border-gray-200 dark:border-gray-500" />
+
+                    <div class="py-1">
+                      <p class="px-4 py-2 md:text-sm leading-tight hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-gray-100 cursor-pointer flex items-center justify-between">
+                        Custom range
+                        <span class="font-normal">C</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </transition>
+            </div>
+
             <button
               class="text-sm bg-indigo-600 text-white py-2 px-4 rounded-md"
               @click="$store.commit('layout/TOGGLE_CREATE_LINK_SLIDEOVER', true)"
@@ -69,6 +105,7 @@ export default {
   middleware: 'auth',
   data () {
     return {
+      showDateMenu: false,
       datacollection: null,
       chartOptions: {
         legend: { display: false },
@@ -99,13 +136,14 @@ export default {
       }
     }
   },
-  mounted () {
+  async mounted () {
     this.fillData()
+    const clicks = await this.$axios.$get('/clicks/today/TestWorkspace')
+    console.log(clicks)
   },
   methods: {
     fillData () {
       this.datacollection = {
-        // labels: ['May'],
         datasets: [
           {
             label: 'Clicks',
@@ -145,6 +183,9 @@ export default {
     },
     getRandomInt () {
       return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+    },
+    clickOutsideDateMenu () {
+      this.showDateMenu = false
     }
   }
 }
