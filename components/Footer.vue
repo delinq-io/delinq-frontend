@@ -19,6 +19,15 @@
               Sponsor @delinq-io
             </a>
           </div>
+
+          <div class="mt-4">
+            <div class="flex flex-col">
+              <p class="text-gray-400 cursor-pointer" @click="changeTheme()">
+                <font-awesome-icon :icon="isDark ? 'sun' : 'moon'" class="mr-1" />
+                <span>{{ isDark ? 'Light theme' : 'Dark theme' }}</span>
+              </p>
+            </div>
+          </div>
         </div>
 
         <!-- categories -->
@@ -114,3 +123,20 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  computed: {
+    isDark () {
+      return this.$colorMode.preference === 'dark'
+    }
+  },
+  methods: {
+    changeTheme () {
+      this.isDark
+        ? this.$colorMode.preference = 'light'
+        : this.$colorMode.preference = 'dark'
+    }
+  }
+}
+</script>
