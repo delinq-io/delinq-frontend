@@ -63,8 +63,14 @@ export default {
     // https://auth.nuxtjs.org/guide/setup
     '@nuxtjs/auth',
     // https://github.com/nuxt-community/community-modules/tree/master/packages/toast
-    '@nuxtjs/toast'
+    '@nuxtjs/toast',
+    // https://pwa.nuxtjs.org/setup
+    '@nuxtjs/pwa'
   ],
+
+  pwa: {
+    workbox: false
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
