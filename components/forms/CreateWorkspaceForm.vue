@@ -1,43 +1,87 @@
 <template>
-  <form
-    class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 shadow-md rounded px-8 py-6 mt-8"
-    @submit.prevent="submitForm()"
-  >
-    <h1 class="text-xl font-black dark:text-gray-100">
-      Create new workspace
-    </h1>
+  <validation-observer v-slot="{ handleSubmit, failed }" class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 shadow-md rounded px-8 py-6 mt-8">
+    <form @submit.prevent="handleSubmit(submitForm)">
+      <h1 class="text-xl font-black dark:text-gray-100">
+        Create new workspace
+      </h1>
 
-    <!--------------------------->
-    <!-- name -->
-    <div class="my-4 mt-8">
-      <label class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" for="email">Workspace name</label>
-      <input
-        v-model="form.name"
+      <!--------------------------->
+      <!-- name -->
+      <validation-provider
+        v-slot="{ errors }"
         name="name"
-        type="text"
-        class="bg-gray-100 dark:bg-gray-900 outline-none appearance-none border border-transparent rounded w-full p-2 text-gray-700 dark:text-gray-300 leading-normal focus:outline-none focus:bg-white dark:focus:bg-gray-800 focus:border-gray-300 dark:focus:border-gray-500"
+        rules="required|max:32"
       >
-    </div>
+        <div class="my-4 mt-8">
+          <div class="flex justify-between items-center flex-wrap">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Workspace name</label>
+            <span v-show="errors[0]" class="inline-block w-auto text-xs text-red-500 ">{{ errors[0] }}.</span>
+          </div>
+          <div class="mt-1">
+            <input
+              v-model="form.name"
+              name="name"
+              type="text"
+              class="bg-gray-100 dark:bg-gray-900 outline-none appearance-none border border-transparent rounded w-full p-2 text-gray-700 dark:text-gray-300 leading-normal focus:outline-none focus:bg-white dark:focus:bg-gray-900 focus:border-gray-300 dark:focus:border-gray-500"
+            >
+          </div>
+        </div>
+      </validation-provider>
 
-    <!--------------------------->
-    <!-- submit button -->
-    <button
-      :disabled="isLoading"
-      type="submit"
-      class="mt-4 w-full text-sm bg-indigo-600 text-white py-2 rounded-md"
-    >
-      Create
-    </button>
-  </form>
+      <!--------------------------->
+      <!-- timezone -->
+      <validation-provider
+        v-slot="{ errors }"
+        name="name"
+        rules="required"
+      >
+        <div class="my-6">
+          <div class="flex justify-between items-center flex-wrap">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Reporting Timezone</label>
+            <span v-show="errors[0]" class="inline-block w-auto text-xs text-red-500 ">{{ errors[0] }}.</span>
+          </div>
+          <p class="text-gray-500 dark:text-gray-400 text-xs mt-1">
+            To make sure we agree on what 'today' means
+          </p>
+
+          <div class="mt-1">
+            <div class="w-full pr-3 bg-gray-900 rounded">
+              <timezone-select
+                v-model="form.timezone"
+              />
+            </div>
+          </div>
+        </div>
+      </validation-provider>
+
+      <!--------------------------->
+      <!-- submit button -->
+      <button
+        :disabled="failed || isLoading"
+        type="submit"
+        class="mt-4 w-full text-sm bg-indigo-600 text-white py-2 rounded-md"
+        :class="{ 'cursor-not-allowed': failed }"
+      >
+        Create
+      </button>
+    </form>
+  </validation-observer>
 </template>
 
 <script>
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
+
 export default {
+  components: {
+    ValidationObserver,
+    ValidationProvider
+  },
   data () {
     return {
       isLoading: false,
       form: {
-        name: ''
+        name: '',
+        timezone: 'Europe/Brussels'
       }
     }
   },
