@@ -74,7 +74,7 @@
                       v-model="form.title"
                       name="title"
                       placeholder="Add a title."
-                      class="dark:bg-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full p-3 sm:text-sm border border-gray-300 dark:border-gray-600 rounded-md dark:text-gray-300"
+                      class="dark:bg-gray-900 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full px-3 py-2 sm:text-sm border border-gray-300 dark:border-gray-600 rounded-md dark:text-gray-300"
                     >
                   </div>
                 </div>
@@ -92,19 +92,17 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Customize back-half</label>
                     <span v-show="errors[0]" class="inline-block w-auto text-xs text-red-500 ">{{ errors[0] }}.</span>
                   </div>
-                  <div class="mt-1">
-                    <div class="w-full flex items-center dark:bg-gray-900 shadow-sm border border-gray-300 dark:border-gray-600 rounded-md">
-                      <span class="pl-3 dark:text-gray-400 text-sm ">
-                        delinq.io/
-                      </span>
-
-                      <input
-                        v-model="form.key"
-                        autocomplete="off"
-                        name="key"
-                        class="dark:bg-gray-900 focus:outline-none block w-full py-3 pr-3 sm:text-sm rounded-md dark:text-gray-300"
-                      >
-                    </div>
+                  <div class="mt-1 flex rounded-md shadow-sm">
+                    <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-850 text-gray-500 dark:text-gray-400 sm:text-sm">
+                      delinq.io/
+                    </span>
+                    <input
+                      v-model="form.key"
+                      name="key"
+                      type="text"
+                      autocomplete="off"
+                      class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full px-3 py-2 rounded-none rounded-r-md sm:text-sm border border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300"
+                    >
                   </div>
                 </div>
               </validation-provider>
