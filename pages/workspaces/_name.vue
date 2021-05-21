@@ -8,7 +8,7 @@
 
             <p class="block mr-auto text-sm font-medium text-gray-500 dark:text-gray-300">
               <svg class="inline w-2 mr-2 text-green-500 fill-current" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="8" /></svg>
-              0 clicks in last 24h
+              {{ clicks.length }} clicks in last 24h
             </p>
           </div>
 
@@ -19,7 +19,7 @@
                 @click="showDateMenu = !showDateMenu"
               >
                 <span class="mr-2">Today</span>
-                <font-awesome-icon icon="caret-down" class="text-indigo-500 h-4 w-4" />
+                <font-awesome-icon icon="caret-down" class="text-gray-500 h-4 w-4" />
               </div>
 
               <transition name="fade" :duration="80">
@@ -28,11 +28,7 @@
                     <div class="py-1">
                       <p class="font-bold px-4 py-2 md:text-sm leading-tight hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-gray-100 flex items-center justify-between">
                         Today
-                        <span class="font-normal">D</span>
-                      </p>
-                      <p class=" px-4 py-2 md:text-sm leading-tight hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-gray-100 flex items-center justify-between">
-                        Realtime
-                        <span class="font-normal">R</span>
+                        <!-- <span class="font-normal">D</span> -->
                       </p>
                     </div>
 
@@ -40,8 +36,7 @@
 
                     <div class="py-1">
                       <p class="px-4 py-2 md:text-sm leading-tight hover:bg-gray-100 dark:hover:bg-gray-900 hover:text-gray-900 dark:hover:text-gray-100 cursor-pointer flex items-center justify-between">
-                        Custom range
-                        <span class="font-normal">C</span>
+                        More coming soon...
                       </p>
                     </div>
                   </div>
@@ -63,7 +58,7 @@
       <div class="w-full mt-2 bg-white rounded shadow-xl dark:bg-gray-825 main-graph">
         <div class="graph-inner">
           <div class="flex flex-wrap">
-            <div class="px-8 w-1/2 my-4 lg:w-auto  border-r lg:border-r-0">
+            <div class="px-8 w-1/2 my-4 lg:w-auto border-r lg:border-r-0">
               <div class="text-xs font-bold tracking-wide text-gray-500 uppercase dark:text-gray-400 whitespace-nowrap">
                 Total clicks
               </div>
@@ -105,10 +100,32 @@ export default {
   middleware: 'auth',
   data () {
     return {
+      clicks: [],
       showDateMenu: false,
       datacollection: null,
       chartOptions: {
         legend: { display: false },
+        elements: { line: { tension: 0 }, point: { radius: 0 } },
+        tooltips: {
+          mode: 'index',
+          intersect: false,
+          xPadding: 10,
+          yPadding: 10,
+          titleFontSize: 18,
+          footerFontSize: 14,
+          bodyFontSize: 14,
+          backgroundColor: 'rgba(25, 30, 56)',
+          titleMarginBottom: 8,
+          bodySpacing: 6,
+          footerMarginTop: 8,
+          multiKeyBackground: 'none',
+          callbacks: {
+            title (dataPoints) {
+              const data = dataPoints[0]
+              return new Date(data.xLabel).toLocaleString('en-US', { hour: 'numeric', hour12: true })
+            }
+          }
+        },
         scales: {
           yAxes: [{
             ticks: {
@@ -117,18 +134,16 @@ export default {
               maxTicksLimit: 8,
               fontColor: 'rgb(243, 244, 246)'
             },
-            gridLines: {
-              zeroLineColor: 'transparent',
-              drawBorder: false
-            }
+            gridLines: { zeroLineColor: 'transparent', drawBorder: false }
           }],
           xAxes: [{
             type: 'time',
             distribution: 'linear',
-            time: { unit: 'day' },
+            time: { unit: 'hour' },
             gridLines: { display: false },
             ticks: {
               autoSkip: true,
+              maxTicksLimit: 8,
               fontColor: 'rgb(243, 244, 246)'
             }
           }]
@@ -137,52 +152,37 @@ export default {
     }
   },
   async mounted () {
+    this.clicks = await this.$axios.$get(`/clicks/${this.$route.params.name}/today`)
+    console.log(this.clicks)
     this.fillData()
-    const clicks = await this.$axios.$get('/clicks/today/TestWorkspace')
-    console.log(clicks)
   },
   methods: {
     fillData () {
-      this.datacollection = {
-        datasets: [
-          {
-            label: 'Clicks',
-            borderWidth: 3,
-            borderColor: 'rgba(101,116,205)',
-            pointBackgroundColor: 'rgba(101,116,205)',
-            data: [
-              {
-                x: new Date(new Date().getTime() - (5 * 24 * 60 * 60 * 1000)),
-                y: this.getRandomInt()
-              },
-              {
-                x: new Date(new Date().getTime() - (4 * 24 * 60 * 60 * 1000)),
-                y: this.getRandomInt()
-              },
-              {
-                x: new Date(new Date().getTime() - (3 * 24 * 60 * 60 * 1000)),
-                y: this.getRandomInt()
-              },
-              {
-                x: new Date(new Date().getTime() - (2 * 24 * 60 * 60 * 1000)),
-                y: this.getRandomInt()
-              },
-              {
-                x: new Date(new Date().getTime() - (1 * 24 * 60 * 60 * 1000)),
-                y: this.getRandomInt()
-              },
-              {
-                x: new Date(),
-                y: this.getRandomInt()
-              }
-            ]
-          }
+      const data = []
+      const hours = []
+      const day = this.$dateFns.format(this.clicks[0].created_at, 'yyyy-MM-dd')
+      for (let i = 0; i < 24; i++) { hours.push(`${day} ${i}:00:00`) }
+      hours.forEach(hour => data.push({ x: hour, y: 0 }))
 
-        ]
+      this.clicks.forEach((click) => {
+        const date = this.$dateFns.format(click.created_at, 'yyyy-MM-dd H:00:00')
+        data[data.findIndex(el => el.x === date)].y += 1
+      })
+
+      const gradient = document.getElementById('line-chart').getContext('2d').createLinearGradient(0, 0, 0, 300)
+      gradient.addColorStop(0, 'rgba(101,116,205, 0.2)')
+      gradient.addColorStop(1, 'rgba(101,116,205, 0)')
+
+      this.datacollection = {
+        datasets: [{
+          label: 'Clicks',
+          borderWidth: 3,
+          borderColor: 'rgba(101,116,205)',
+          pointBackgroundColor: 'rgba(101,116,205)',
+          backgroundColor: gradient,
+          data
+        }]
       }
-    },
-    getRandomInt () {
-      return Math.floor(Math.random() * (50 - 5 + 1)) + 5
     },
     clickOutsideDateMenu () {
       this.showDateMenu = false
