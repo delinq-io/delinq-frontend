@@ -34,7 +34,7 @@
       <!-- body ----------------------------------->
       <!------------------------------------------->
       <div class="w-full mt-2 bg-white rounded shadow-xl dark:bg-gray-825 main-graph">
-        <ClicksGraph :time-period="timePeriod" />
+        <CardClicksGraph :time-period="timePeriod" />
       </div>
     </div>
   </div>
