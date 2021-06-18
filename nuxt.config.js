@@ -33,6 +33,7 @@ export default {
     { src: '~/plugins/vee-validate.js', ssr: false },
     { src: '~/plugins/directives.js', ssr: false },
     { src: '~/plugins/global-mixins.js', ssr: false },
+    { src: '~/plugins/vue-luxon.js', ssr: false },
     { src: '~/plugins/global-toasts.js', ssr: false }
   ],
 
