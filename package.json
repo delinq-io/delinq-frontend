@@ -17,7 +17,7 @@
     "@nuxtjs/toast": "^3.3.1",
     "core-js": "^3.12.1",
     "nuxt": "^2.15.6",
-    "vee-validate": "^3.4.6"
+    "vee-validate": "^4.6.5"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
